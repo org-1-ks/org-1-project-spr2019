@@ -22,6 +22,8 @@ You want to add/remove/change something in the repo, follow the following steps.
  8) Message someone to get a review done
  9) After review, if there are changes that need to be made, go to step 5)
  10) Merge branch
+ 11) Delete branch, you can do this by going the merged pull request and deleting the branch there
+        1) This is to prevent using a branch after it has been merged, which can be hard to deal with.
 
 Yes, this is a lot of steps, but this will prevent mistakes.
 
