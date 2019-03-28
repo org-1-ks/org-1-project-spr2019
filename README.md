@@ -16,6 +16,11 @@ You want to add/remove/change something in the repo, follow the following steps.
  2) Name the new branch and select create new branch. Please name it appropriately.
  3) Pulling the new branch in Eclipse. To do this, just right click the project in Eclipse and go to `Teams>Pull`
  4) Switch to the branch. Right click project, then `Team>Switch To>` then select the branch that you made
+    1) If this the first time you are checking out the branch, after you go to `Team>Switch To>` select `Other...`.
+    2) Go into the `Remote Tracking` folder
+    3) select your branch from there
+    4) `Checkout as New Local Branch`
+    5) `Finish`
  5) Do Work
  6) Commit work
  7) Push Work
