@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -43,8 +41,5 @@ public class Frame extends JFrame
         
         // If the frame is closed, the application should exit
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
-        // show the frame
-        setVisible(true);
     }
 }
