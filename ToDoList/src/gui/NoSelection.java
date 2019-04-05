@@ -11,6 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+/**
+ * 
+ * The screen when the user has not selected an item
+ * 
+ * @author Krishna Sannasi
+ *
+ */
 public class NoSelection extends JPanel
 {
 

@@ -6,6 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 
+/**
+ * 
+ * The tool bar that is shared across screens
+ * 
+ * @author Krishna Sannasi
+ *
+ */
 public class ToolBar extends JToolBar
 {
 

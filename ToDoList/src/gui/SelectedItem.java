@@ -2,6 +2,13 @@ package gui;
 
 import javax.swing.JPanel;
 
+/**
+ * 
+ * The screen when the user has selected an item
+ * 
+ * @author Krishna Sannasi
+ *
+ */
 public class SelectedItem extends JPanel
 {
 

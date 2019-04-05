@@ -6,6 +6,12 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+/**
+ * The main window of the ToDo list
+ * 
+ * @author Krishna Sannasi
+ *
+ */
 public class Frame extends JFrame
 {
     
