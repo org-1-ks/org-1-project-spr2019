@@ -53,7 +53,7 @@ public interface ToDoList
      * Gets the element in the list that has the given name
      * 
      * @param e
-     * @return
+     * @return - element with the name if it exists, otherwise null
      */
     Element getElement(String name);
     
@@ -61,7 +61,7 @@ public interface ToDoList
      * Gets the element in the list that has the given priority
      * 
      * @param e
-     * @return
+     * @return - element with the priority if it exists, otherwise null
      */
     Element getElement(int priority);
     
