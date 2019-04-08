@@ -50,12 +50,20 @@ public interface ToDoList
     boolean moveElementToIndex(Element e, int index);
     
     /**
-     * Gets the element in the list that is equal to the given element
+     * Gets the element in the list that has the given name
      * 
      * @param e
      * @return
      */
-    Element getElement(Element e);
+    Element getElement(String name);
+    
+    /**
+     * Gets the element in the list that has the given priority
+     * 
+     * @param e
+     * @return
+     */
+    Element getElement(int priority);
     
     /**
      * Write the ToDo list report to the given file
