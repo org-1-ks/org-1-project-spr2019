@@ -2,7 +2,7 @@ package controller;
 
 import java.time.LocalDate;
 
-import model.Status;
+import model.status.Status;
 
 /**
  * Elements represent an immutable item in the ToDo list
