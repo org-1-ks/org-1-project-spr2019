@@ -1,13 +1,20 @@
 package model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.Element;
 import controller.ToDoList;
 import controller.Sort;
 
-public class ToDoFuncs implements ToDoList {
+public class ToDoFuncs implements ToDoList, Serializable {
 	ArrayList<Element> list = new ArrayList<Element>();
 	@Override
 	public void insertElement(Element e) {
@@ -98,13 +105,47 @@ public class ToDoFuncs implements ToDoList {
 
 	@Override
 	public void saveTo(File file) {
-		// TODO Auto-generated method stub
-		//gotta look this up again to figure it out
+		//  Try catch block to handle file exceptions
+		try {
+			// OOS object, "FileOutputStream(file)" might not be correct, since
+			// the param of FileOutputStream is usually a string (filename)...
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+			// load in each object in the array list
+			for (int i = 0; i < list.size(); i++) {
+				// write the object to the file
+				os.writeObject(list.get(i));
+			}
+			os.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void loadFrom(File file) {
-		// TODO Auto-generated method stub
+		// Try catch block to handle file exceptions
+		try {
+			// same concern as before with FileInputStream
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
+			// load each object into the ArrayList
+			// NEEDS IMPLEMENTATION...
+			
+			// if I wanted to read in a singular object I would do something like this...
+			// Element temp = (Element) is.readObject();
+			// However there is going to be multiple objects, I am not sure how to read
+			// all of them in properly. 
+			is.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//shouldn't be hard, reverse of saveto
 	}
 
