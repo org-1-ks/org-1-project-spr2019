@@ -18,8 +18,7 @@ public class ToDoFuncs implements ToDoList {
 	@Override
 	public boolean removeElement(Element e) {
 		// TODO Auto-generated method stub
-		list.remove(e);
-		return true;
+		return list.remove(e);
 	}
 
 	@Override
@@ -42,13 +41,14 @@ public class ToDoFuncs implements ToDoList {
 	public boolean moveElementToIndex(Element e, int index) {
 		// TODO Auto-generated method stub
 		if(list.indexOf(e)==index) {
+			// Do nothing
 		}
 		else if(list.indexOf(e)!=-1) {
 			list.remove(e);
 			list.add(index,e);
 		}
 		else {
-			list.add(index,e);
+			return false;
 		}
 		return true;
 	}
