@@ -26,6 +26,15 @@ public class ElementFuncs implements Element{
 	}
 
 	@Override
+	public boolean equals(Element e) {
+		boolean compare = false;
+		if(priority == e.getPriority() && name.equals(e.getName()) && description.equals(e.getDescription()) && status.equals(e.getStatus()) && dueDate.equals(e.getDueDate())) {
+			compare==true;
+		}
+		return compare;
+	}
+	
+	@Override
 	public LocalDate getDueDate() {
 		// TODO Auto-generated method stub
 		return dueDate;
@@ -87,14 +96,8 @@ public class ElementFuncs implements Element{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		if (this.getStatusDate() != null)
-			return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
-					this.getStatus() + "\t" + this.getStatusDate() + "\t" + this.getDescription() ;	
-		else {
-			return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
-					this.getStatus() + "\tN/A\t" + this.getDescription() ;
-		}
-
+		return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
+				this.getStatus() + "\t" +this.getDescription() ;
 	}
 	
 }
