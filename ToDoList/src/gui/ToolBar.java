@@ -50,12 +50,10 @@ public class ToolBar extends JToolBar
         
         insert.addActionListener(e -> {
             frame.selectItem();
-            
-            JOptionPane.showMessageDialog(frame, "Item inserted", "Button Test", JOptionPane.INFORMATION_MESSAGE);
         });
 
         remove.addActionListener(e -> {
-            JOptionPane.showMessageDialog(frame, "Item removed", "Button Test", JOptionPane.INFORMATION_MESSAGE);
+            frame.list.removeElement(frame.selectedItem);
         });
 
         print.addActionListener(e -> {
