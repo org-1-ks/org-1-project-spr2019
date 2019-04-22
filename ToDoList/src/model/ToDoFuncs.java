@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,7 +37,7 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		switch(s) {		
 		case Priority:
 			//sort the list by comparing the priorities
-			Collections.sort(list, (Element a, Element b) -> a.getPriority().compareTo(b.getPriority())) ;
+			Collections.sort(list, (Element a, Element b) -> a.getPriority() - b.getPriority());
 			break;
 		case DueDate:
 			//sort the list by comparing the due dates
@@ -106,11 +107,11 @@ public class ToDoFuncs implements ToDoList, Serializable {
 	public void printTo(File file) {
 		// TODO Auto-generated method stub
 		try {
-			PrintWriter write = new PrintWriter(FileWriter(file)) ;
+			PrintWriter write = new PrintWriter(new FileWriter(file)) ;
 			write.print("Priority\tDue Date\tTitle\tStatus\tDescription\n") ;
 			for (int i = 0; i < list.size(); i++)
 			{
-				write.print(list.get(i).toString) ;
+				write.print(list.get(i).toString()) ;
 			}
 			write.close() ;
 			
@@ -128,10 +129,9 @@ public class ToDoFuncs implements ToDoList, Serializable {
 			// the param of FileOutputStream is usually a string (filename)...
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
 			// load in each object in the array list
-			for (int i = 0; i < list.size(); i++) {
-				// write the object to the file
-				os.writeObject(list.get(i));
-			}
+
+			os.writeObject(list);
+
 			os.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -142,19 +142,17 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		}
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
+    @Override
 	public void loadFrom(File file) {
 		// Try catch block to handle file exceptions
 		try {
 			// same concern as before with FileInputStream
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
 			// load each object into the ArrayList
-			// NEEDS IMPLEMENTATION...
 			
-			// if I wanted to read in a singular object I would do something like this...
-			// Element temp = (Element) is.readObject();
-			// However there is going to be multiple objects, I am not sure how to read
-			// all of them in properly. 
+			list = (ArrayList<Element>) is.readObject();
+ 
 			is.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -162,8 +160,10 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		//shouldn't be hard, reverse of saveto
+		} catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
 
 	@Override
