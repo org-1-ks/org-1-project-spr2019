@@ -5,17 +5,21 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import controller.Element;
+import model.status.Finished;
+import model.status.InProgress;
+import model.status.NotStarted;
 import model.status.Status;
 
 
@@ -40,6 +44,7 @@ public class SelectedItem extends JPanel
     private static JTextField priority;
     private static JTextField name;
     private static JTextField date;
+    private static JTextField auxDate;
     private static JComboBox<String> status;
     private static JTextArea description;
 
@@ -47,10 +52,109 @@ public class SelectedItem extends JPanel
     
     public SelectedItem(Frame frame)
     {
-        var list = new JList<>();
-        var editScreen = makeEditScreen(frame);
+        var topPanel = new JPanel();
+        var saveCancelPanel = new JPanel();
+
+        var nameLabel = new JLabel("Name:");
+        var priorityLabel = new JLabel("Priority:");
+        var statusLabel = new JLabel("Status:");
+        var dateLabel = new JLabel("Date: ");
+        var auxDateLabel = new JLabel("Start/End Date: ");
+        var save = new JButton("Save");
+        var cancel = new JButton("Cancel");
         
-        list.setBorder(new LineBorder(Color.BLACK));
+        name = new JTextField(30);
+        date = new JTextField(10);
+        auxDate = new JTextField(10);
+        priority = new JTextField(5);
+        status = new JComboBox<>(new String[] {
+            NOT_STARTED,
+            IN_PROGRESS,
+            FINISHED
+        });
+        description = new JTextArea();
+        description.setBorder(new LineBorder(Color.BLACK));
+        
+        auxDate.setEnabled(false);
+        
+        status.addActionListener(e -> {
+            switch((String) status.getSelectedItem()) {
+                default: return; // unreachable
+                case NOT_STARTED:
+                    auxDate.setEnabled(false);
+                    break;
+                case FINISHED:
+                case IN_PROGRESS:
+                    auxDate.setEnabled(true);
+                    break;
+            }
+        });
+        
+        cancel.addActionListener(e -> {
+            frame.unselectItem();
+        });
+        
+        save.addActionListener(e -> {
+            if("N/A".equals(date.getText())) {
+                JOptionPane.showMessageDialog(frame, "Please enter a due date", "Edit Item", JOptionPane.ERROR_MESSAGE);
+            } else {
+                try {
+                    Status statusValue;
+                    
+                    switch((String) status.getSelectedItem()) {
+                        default: return; // unreachable
+                        case NOT_STARTED:
+                            statusValue = new NotStarted();
+                            break;
+                        case FINISHED:
+                            statusValue = new Finished(LocalDate.parse(auxDate.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
+                            break;
+                        case IN_PROGRESS:
+                            statusValue = new InProgress(LocalDate.parse(auxDate.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
+                            break;
+                    }
+                    
+                    var priorityValue = Integer.parseInt(priority.getText());
+                    
+                    if(priorityValue < 1) {
+                        throw new NumberFormatException("Invalid Priority");
+                    }
+                    
+                    var dueDate = LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
+                    var newSelected = selected
+                            .withName(name.getText())
+                            .withDescription(description.getText())
+                            .withPriority(priorityValue)
+                            .withDueDate(dueDate)
+                            .withStatus(statusValue);
+                        
+                        frame.list.removeElement(selected);
+                        frame.list.insertElement(newSelected);
+                        selected = newSelected;
+                        
+                        frame.updateList();
+                        frame.unselectItem();
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(frame, "dates must have the format YYYY-MM-DD", "Edit Item", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a positive integer for the priority", "Edit Item", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+        topPanel.add(priorityLabel);
+        topPanel.add(priority);
+        topPanel.add(statusLabel);
+        topPanel.add(status);
+        topPanel.add(auxDateLabel);
+        topPanel.add(auxDate);
+        topPanel.add(dateLabel);
+        topPanel.add(date);
+        topPanel.add(nameLabel);
+        topPanel.add(name);
+        
+        saveCancelPanel.add(save);
+        saveCancelPanel.add(cancel);
         
         setLayout(new GridBagLayout());
         
@@ -61,126 +165,27 @@ public class SelectedItem extends JPanel
         c.gridx = 0;
         c.gridy = 0;
 
-        c.weightx = 2;
-        c.weighty = 1;
-        
-        c.gridwidth = 1;
-        c.gridheight = 1;
-
-        add(list, c);
-        
-        c.gridx++;
-        c.weightx = 1;
-        
-        add(editScreen, c);
-        
-        setVisible(true);
-    }
-
-    private static JPanel makeEditScreen(Frame frame)
-    {
-        var editScreen = new JPanel();
-        var topPanel = new JPanel();
-        var saveCancelPanel = new JPanel();
-
-        var nameLabel = new JLabel("Name:");
-        var priorityLabel = new JLabel("Priority:");
-        var statusLabel = new JLabel("Status:");
-        var dateLabel = new JLabel("Date: ");
-        var save = new JButton("Save");
-        var cancel = new JButton("Cancel");
-        
-        name = new JTextField(40);
-        date = new JTextField(10);
-        priority = new JTextField(5);
-        status = new JComboBox<>(new String[] {
-            NOT_STARTED,
-            IN_PROGRESS,
-            FINISHED
-        });
-        description = new JTextArea();
-        description.setBorder(new LineBorder(Color.BLACK));
-        
-        cancel.addActionListener(e -> {
-            frame.unselectItem();
-        });
-        
-        save.addActionListener(e -> {
-            Status.Type statusType;
-            
-            switch((String) status.getSelectedItem()) {
-                case NOT_STARTED:
-                    statusType = Status.Type.NOT_STARTED;
-                    break;
-                case FINISHED:
-                    statusType = Status.Type.FINISHED;
-                    break;
-                case IN_PROGRESS:
-                    statusType = Status.Type.IN_PROGRESS;
-                    break;
-            }
-            
-            var newSelected = selected
-                .withName(name.getText())
-                .withDescription(description.getText())
-                .withPriority(Integer.parseInt(priority.getText()))
-//                .withStatus(status.getSelectedItem()) // TODO: Finish status
-                ;
-            
-            if(!"N/A".equals(date.getText())) {
-                newSelected = newSelected.withDueDate(LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
-            }
-            
-            frame.list.removeElement(selected);
-            frame.list.insertElement(newSelected);
-            selected = newSelected;
-            
-            frame.updateList();
-            frame.unselectItem();
-        });
-        
-        topPanel.add(priorityLabel);
-        topPanel.add(priority);
-        topPanel.add(statusLabel);
-        topPanel.add(status);
-        topPanel.add(dateLabel);
-        topPanel.add(date);
-        topPanel.add(nameLabel);
-        topPanel.add(name);
-        
-        saveCancelPanel.add(save);
-        saveCancelPanel.add(cancel);
-        
-        editScreen.setLayout(new GridBagLayout());
-        
-        var c = new GridBagConstraints();
-        
-        c.fill = GridBagConstraints.BOTH;
-
-        c.gridx = 0;
-        c.gridy = 0;
-
         c.weightx = 1;
         c.weighty = 1;
         
         c.gridwidth = 1;
         c.gridheight = 1;
 
-        editScreen.add(topPanel, c);
+        add(topPanel, c);
 
         c.gridx = 0;
         c.gridy++;
         c.anchor = GridBagConstraints.WEST;
         
-        editScreen.add(saveCancelPanel, c);
+        add(saveCancelPanel, c);
         
         c.gridy++;
         c.weighty = 7;
         c.anchor = GridBagConstraints.CENTER;
         
-        editScreen.add(description, c);
+        add(description, c);
         
-        return editScreen;
+        setVisible(true);
     }
     
     void use(Element e) {
