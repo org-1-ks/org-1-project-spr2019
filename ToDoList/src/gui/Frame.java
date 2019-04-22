@@ -28,7 +28,7 @@ public class Frame extends JFrame
     public Frame()
     {
         noSelection = new NoSelection();
-        itemSelected = null;
+        itemSelected = new SelectedItem();
         
         setLayout(new BorderLayout());
         
@@ -44,6 +44,9 @@ public class Frame extends JFrame
 
         // initial screen should have no selection
         add(noSelection, BorderLayout.CENTER);
+
+        // initial screen should have no selection
+//        add(itemSelected, BorderLayout.CENTER);
         
         // If the frame is closed, the application should exit
         setDefaultCloseOperation(EXIT_ON_CLOSE);
