@@ -18,7 +18,7 @@ import controller.ToDoList;
 public class Frame extends JFrame
 {
     /**
-     * 
+     * Auto-generated serial number
      */
     private static final long serialVersionUID = 4743270606172960944L;
     
@@ -30,6 +30,11 @@ public class Frame extends JFrame
     Element selectedItem;
     ToDoList list;
     
+    /**
+     * Sets the window for all operations on the list to take place.
+     * @param list
+     * @param defaultElement
+     */
     public Frame(ToDoList list, Element defaultElement)
     {
         this.list = list;
@@ -59,6 +64,9 @@ public class Frame extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
+    /**
+     * Allows to open a new window when an item is selected.
+     */
     void selectItem() {
         remove(noSelection);
         
@@ -71,6 +79,9 @@ public class Frame extends JFrame
         revalidate();
     }
     
+    /**
+     * Changes the appearance of the window when an item is not selected.
+     */
     void unselectItem() {
         remove(itemSelected);
         add(noSelection, BorderLayout.CENTER);
@@ -80,6 +91,9 @@ public class Frame extends JFrame
         revalidate();
     }
     
+    /**
+     * Updated the list when the selection of an item is complete.
+     */
     void updateList() {
         itemSelected.updateList();
         noSelection.updateList(this.list);
