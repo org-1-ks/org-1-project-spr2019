@@ -8,15 +8,12 @@ import java.awt.event.MouseListener;
 import java.time.LocalDate;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-import controller.Element;
 import controller.ToDoList;
 import model.status.Status;
 
@@ -36,7 +33,7 @@ public class NoSelection extends JPanel
     private static final long serialVersionUID = 6611121813221534119L;
     private JList<Object>[] lists;
     private DefaultListModel<Integer> priorityList;
-    private DefaultListModel<LocalDate> dueDateList;
+    private DefaultListModel<String> dueDateList;
     private DefaultListModel<String> taskNameList;
     private DefaultListModel<Status> statusList;
     private DefaultListModel<String> descriptionList;
@@ -52,7 +49,7 @@ public class NoSelection extends JPanel
         var description =  new JLabel("Description");
         
         priorityList = new DefaultListModel<Integer>();
-        dueDateList = new DefaultListModel<LocalDate>();
+        dueDateList = new DefaultListModel<String>();
         taskNameList = new DefaultListModel<String>();
         statusList = new DefaultListModel<Status>();
         descriptionList = new DefaultListModel<String>();
@@ -106,7 +103,6 @@ public class NoSelection extends JPanel
                                     .withName((String) lists[2].getSelectedValue())
                                     .withStatus((Status) lists[3].getSelectedValue())
                                     .withDescription((String) lists[4].getSelectedValue());
-                        System.out.println("Selected: " + frame.selectedItem.getDueDate());
                         frame.selectItem();
                     } else {
                         for(var l: lists) {
@@ -184,7 +180,11 @@ public class NoSelection extends JPanel
         int size = 0;
         for(var e: list.getElements()) {
             priorityList.add(size, e.getPriority());
-            dueDateList.add(size, e.getDueDate());
+            if(e.getDueDate() == null) {
+                dueDateList.add(size, "N/A");
+            } else {
+                dueDateList.add(size, e.getDueDate().toString());
+            }
             taskNameList.add(size, e.getName());
             statusList.add(size, e.getStatus());
             descriptionList.add(size, e.getDescription()); 
