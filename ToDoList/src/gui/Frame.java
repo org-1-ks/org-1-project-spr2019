@@ -27,7 +27,7 @@ public class Frame extends JFrame
     
     private ToolBar toolBar;
     
-    Element selectedItem;
+    Element selectedItem, defaultItem;
     ToDoList list;
     
     /**
@@ -39,6 +39,7 @@ public class Frame extends JFrame
     {
         this.list = list;
         this.selectedItem = defaultElement;
+        this.defaultItem = defaultElement;
         
         noSelection = new NoSelection(this);
         itemSelected = new SelectedItem(this);
@@ -58,8 +59,6 @@ public class Frame extends JFrame
 
         // initial screen should have no selection
         add(noSelection, BorderLayout.CENTER);
-
-//        add(itemSelected, BorderLayout.CENTER);
         
         // If the frame is closed, the application should exit
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -106,6 +105,7 @@ public class Frame extends JFrame
             updateList();
             unselectItem();
         } else {
+            selectedItem = defaultItem;
             selectItem();
         }
     }
