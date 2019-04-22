@@ -6,6 +6,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import controller.Element;
+import controller.ToDoList;
+
 /**
  * The main window of the ToDo list
  * 
@@ -14,7 +17,6 @@ import javax.swing.JFrame;
  */
 public class Frame extends JFrame
 {
-    
     /**
      * 
      */
@@ -24,11 +26,18 @@ public class Frame extends JFrame
     private SelectedItem itemSelected;
     
     private ToolBar toolBar;
+    private Element selectedItem;
+    private final Element defaultElement;
     
-    public Frame()
+    ToDoList list;
+    
+    public Frame(ToDoList list, Element defaultElement)
     {
-        noSelection = new NoSelection();
-        itemSelected = new SelectedItem();
+        this.list = list;
+        this.defaultElement = defaultElement;
+        
+        noSelection = new NoSelection(this);
+        itemSelected = new SelectedItem(this);
         
         setLayout(new BorderLayout());
         
@@ -45,10 +54,24 @@ public class Frame extends JFrame
         // initial screen should have no selection
         add(noSelection, BorderLayout.CENTER);
 
-        // initial screen should have no selection
 //        add(itemSelected, BorderLayout.CENTER);
         
         // If the frame is closed, the application should exit
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+    
+    void selectItem() {
+        selectedItem = defaultElement;
+        
+        remove(noSelection);
+        add(itemSelected, BorderLayout.CENTER);
+        
+        itemSelected.use(selectedItem);
+        
+        revalidate();
+    }
+    
+    void updateList() {
+        selectedItem = null;
     }
 }
