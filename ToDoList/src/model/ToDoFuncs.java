@@ -51,6 +51,10 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		// TODO Auto-generated method stub
 		return list.remove(e);
 	}
+	
+	public void clear() {
+		list.clear();
+	}
 
 	@Override
 	public void sortBy(Sort s) {
@@ -129,7 +133,7 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		// TODO Auto-generated method stub
 		try {
 			PrintWriter write = new PrintWriter(new FileWriter(file)) ;
-			write.print("Priority\tDue Date\tTitle\tStatus\tStart/End Date\tDescription\n") ;
+			write.print("Priority\tDue Date\tTitle\t\tStatus\tStart/End Date\tDescription\n") ;
 			for (int i = 0; i < list.size(); i++)
 			{
 				write.print(list.get(i).toString() + "\n") ;
