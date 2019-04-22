@@ -12,11 +12,6 @@ public class Finished extends Status
         this.dateFinished = dateFinished;
     }
 
-    public LocalDate getDateFinished()
-    {
-        return dateFinished;
-    }
-
     @Override
     public Type getType()
     {
@@ -40,5 +35,10 @@ public class Finished extends Status
             return false;
         Finished other = (Finished) obj;
         return Objects.equals(dateFinished, other.dateFinished);
+    }
+    
+    public LocalDate getStatusDate()
+    {
+    	return dateFinished ;
     }
 }
