@@ -124,8 +124,9 @@ public class NoSelection extends JPanel
         
         var c = new GridBagConstraints();
         
+        // initial values for grid bag constraints
         c.fill = GridBagConstraints.BOTH;
-
+        
         c.gridx = 2;
         c.gridy = 0;
 
@@ -145,6 +146,8 @@ public class NoSelection extends JPanel
         c.gridy++;
         c.gridx = 0;
         
+        
+        // go through all labels and lists and add them in the appropriate place
         for(int i = 0; i < labels.length; i++) {
             var label = labels[i];
             var list = lists[i];
@@ -170,7 +173,12 @@ public class NoSelection extends JPanel
         
         setVisible(true);
     }
-
+    
+    /**
+     * Updates the list with new information
+     * 
+     * @param list
+     */
     void updateList(ToDoList list) {
         priorityList.clear();
         dueDateList.clear();

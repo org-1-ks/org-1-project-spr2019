@@ -63,7 +63,7 @@ public class SelectedItem extends JPanel
         var save = new JButton("Save");
         var cancel = new JButton("Cancel");
         
-        name = new JTextField(30);
+        name = new JTextField(20);
         date = new JTextField(10);
         auxDate = new JTextField(10);
         priority = new JTextField(5);
@@ -89,11 +89,13 @@ public class SelectedItem extends JPanel
                     break;
             }
         });
-        
+
+        // Discards changes
         cancel.addActionListener(e -> {
             frame.unselectItem();
         });
         
+        // Saves changes
         save.addActionListener(e -> {
             if("N/A".equals(date.getText())) {
                 JOptionPane.showMessageDialog(frame, "Please enter a due date", "Edit Item", JOptionPane.ERROR_MESSAGE);
@@ -190,6 +192,11 @@ public class SelectedItem extends JPanel
         setVisible(true);
     }
     
+    /**
+     * Select which item to edit
+     * 
+     * @param e - which element is selected
+     */
     void use(Element e) {
         selected = e;
         
@@ -224,9 +231,5 @@ public class SelectedItem extends JPanel
                     break;
             }
         }
-    }
-    
-    void updateList() {
-        
     }
 }

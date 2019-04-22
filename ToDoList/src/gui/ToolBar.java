@@ -46,15 +46,18 @@ public class ToolBar extends JToolBar
                 TASK_NAME
         });
         
+        // dump all previous data
         startOver.addActionListener(e -> {
             frame.list.clear();
             frame.updateList();
         });
-
+        
+        // insert or remove, based on what state the program is in
         insertOrRemove.addActionListener(e -> {
             frame.insertOrRemove();
         });
 
+        // human readable print
         print.addActionListener(e -> {
             var fileChooser = new JFileChooser();
             fileChooser.setMultiSelectionEnabled(false);
@@ -71,6 +74,7 @@ public class ToolBar extends JToolBar
             frame.updateList();
         });
 
+        // saves the list to a file (non-human readable)
         save.addActionListener(e -> {
             var fileChooser = new JFileChooser();
             fileChooser.setMultiSelectionEnabled(false);
@@ -87,6 +91,7 @@ public class ToolBar extends JToolBar
             frame.updateList();
         });
 
+        // loads a list from previous save (non-human readable)
         load.addActionListener(e -> {
             var fileChooser = new JFileChooser();
             fileChooser.setMultiSelectionEnabled(false);
@@ -153,11 +158,18 @@ public class ToolBar extends JToolBar
         sort.setMaximumSize(size);
     }
     
+    /**
+     * Changes toolbar based on what state we are in
+     * 
+     * @param isInsert - which state, true means home page, false means edit page
+     */
     void insertOrRemove(boolean isInsert) {
         if(isInsert) {
             insertOrRemove.setText("Insert Task");
+            sort.setEnabled(true);
         } else {
             insertOrRemove.setText("Remove Task");
+            sort.setEnabled(false);
         }
     }
 }

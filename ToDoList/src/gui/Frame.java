@@ -53,9 +53,7 @@ public class Frame extends JFrame
         
         setSize(screenSize.width * 2 / 3, screenSize.height * 2 / 3);
         
-        var contents = getContentPane();
-
-        contents.add(toolBar, BorderLayout.NORTH);
+        add(toolBar, BorderLayout.NORTH);
 
         // initial screen should have no selection
         add(noSelection, BorderLayout.CENTER);
@@ -92,13 +90,16 @@ public class Frame extends JFrame
     }
     
     /**
-     * Updated the list when the selection of an item is complete.
+     * Updated the list when an item is editted
      */
     void updateList() {
-        itemSelected.updateList();
         noSelection.updateList(this.list);
     }
     
+    /**
+     * This function either inserts or removes an element based
+     * on what screen we are currently on
+     */
     void insertOrRemove() {
         if(itemSelected.isVisible()) {
             list.removeElement(selectedItem);
