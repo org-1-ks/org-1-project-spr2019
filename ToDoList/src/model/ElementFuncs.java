@@ -87,8 +87,14 @@ public class ElementFuncs implements Element{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
-				this.getStatus() + "\t" +this.getDescription() ;
+		if (this.getStatusDate() != null)
+			return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
+					this.getStatus() + "\t" + this.getStatusDate() + "\t" + this.getDescription() ;	
+		else {
+			return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
+					this.getStatus() + "\tN/A\t" + this.getDescription() ;
+		}
+
 	}
 	
 }
