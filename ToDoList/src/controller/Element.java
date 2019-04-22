@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import model.status.Status;
@@ -10,7 +11,7 @@ import model.status.Status;
  * @author Krishna Sannasi
  *
  */
-public interface Element
+public interface Element extends Serializable
 {
     /**
      * @return - priority of this element
