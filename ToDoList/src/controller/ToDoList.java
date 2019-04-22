@@ -67,6 +67,12 @@ public interface ToDoList
     Element getElement(int priority);
     
     /**
+     * Clears the list of all elements
+     * 
+     */
+    void clear();
+    
+    /**
      * Write the ToDo list report to the given file
      * 
      * @param file

@@ -49,7 +49,8 @@ public class ToolBar extends JToolBar
         });
         
         startOver.addActionListener(e -> {
-            
+            frame.list.clear();
+            frame.updateList();
         });
 
         insertOrRemove.addActionListener(e -> {
