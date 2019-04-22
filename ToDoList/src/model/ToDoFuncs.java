@@ -137,10 +137,9 @@ public class ToDoFuncs implements ToDoList, Serializable {
 			// the param of FileOutputStream is usually a string (filename)...
 			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
 			// load in each object in the array list
-			for (int i = 0; i < list.size(); i++) {
-				// write the object to the file
-				os.writeObject(list.get(i));
-			}
+
+			os.writeObject(list);
+
 			os.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -160,6 +159,8 @@ public class ToDoFuncs implements ToDoList, Serializable {
 			// load each object into the ArrayList
 			// NEEDS IMPLEMENTATION...
 			
+			list = (ArrayList<Element>) os.readObject();
+
 			// if I wanted to read in a singular object I would do something like this...
 			// Element temp = (Element) is.readObject();
 			// However there is going to be multiple objects, I am not sure how to read
