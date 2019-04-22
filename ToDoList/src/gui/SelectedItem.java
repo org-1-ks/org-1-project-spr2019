@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,6 +39,7 @@ public class SelectedItem extends JPanel
 
     private static JTextField priority;
     private static JTextField name;
+    private static JTextField date;
     private static JComboBox<String> status;
     private static JTextArea description;
 
@@ -83,10 +86,12 @@ public class SelectedItem extends JPanel
         var nameLabel = new JLabel("Name:");
         var priorityLabel = new JLabel("Priority:");
         var statusLabel = new JLabel("Status:");
+        var dateLabel = new JLabel("Date: ");
         var save = new JButton("Save");
         var cancel = new JButton("Cancel");
         
         name = new JTextField(40);
+        date = new JTextField(10);
         priority = new JTextField(5);
         status = new JComboBox<>(new String[] {
             NOT_STARTED,
@@ -95,6 +100,10 @@ public class SelectedItem extends JPanel
         });
         description = new JTextArea();
         description.setBorder(new LineBorder(Color.BLACK));
+        
+        cancel.addActionListener(e -> {
+            frame.unselectItem();
+        });
         
         save.addActionListener(e -> {
             Status.Type statusType;
@@ -115,8 +124,12 @@ public class SelectedItem extends JPanel
                 .withName(name.getText())
                 .withDescription(description.getText())
                 .withPriority(Integer.parseInt(priority.getText()))
+                .withDueDate(LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE))
 //                .withStatus(status.getSelectedItem()) // TODO: Finish status
                 ;
+            
+            System.out.printf("New: %s", newSelected.getName());
+            
             frame.list.removeElement(selected);
             frame.list.insertElement(newSelected);
             selected = newSelected;
@@ -128,6 +141,8 @@ public class SelectedItem extends JPanel
         topPanel.add(priority);
         topPanel.add(statusLabel);
         topPanel.add(status);
+        topPanel.add(dateLabel);
+        topPanel.add(date);
         topPanel.add(nameLabel);
         topPanel.add(name);
         
@@ -172,6 +187,7 @@ public class SelectedItem extends JPanel
         name.setText(e.getName());
         description.setText(e.getDescription());
         priority.setText("" + e.getPriority());
+        date.setText(e.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
         
         Status.Type statusType = null;
         
@@ -194,5 +210,9 @@ public class SelectedItem extends JPanel
                     break;
             }
         }
+    }
+    
+    void updateList() {
+        
     }
 }
