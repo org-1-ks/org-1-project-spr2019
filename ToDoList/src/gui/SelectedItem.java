@@ -124,17 +124,19 @@ public class SelectedItem extends JPanel
                 .withName(name.getText())
                 .withDescription(description.getText())
                 .withPriority(Integer.parseInt(priority.getText()))
-                .withDueDate(LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE))
 //                .withStatus(status.getSelectedItem()) // TODO: Finish status
                 ;
             
-            System.out.printf("New: %s", newSelected.getName());
+            if(!"N/A".equals(date.getText())) {
+                newSelected = newSelected.withDueDate(LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
+            }
             
             frame.list.removeElement(selected);
             frame.list.insertElement(newSelected);
             selected = newSelected;
             
             frame.updateList();
+            frame.unselectItem();
         });
         
         topPanel.add(priorityLabel);
@@ -184,10 +186,15 @@ public class SelectedItem extends JPanel
     void use(Element e) {
         selected = e;
         
+        var dateString = "N/A";
+        if(e.getDueDate() != null) {
+            dateString = e.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        }
+        
         name.setText(e.getName());
         description.setText(e.getDescription());
         priority.setText("" + e.getPriority());
-        date.setText(e.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        date.setText(dateString);
         
         Status.Type statusType = null;
         
