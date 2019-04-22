@@ -41,4 +41,9 @@ public class Finished extends Status
     {
     	return dateFinished ;
     }
+    
+    public String toString()
+    {
+    	return "Finished" ;
+    }
 }
