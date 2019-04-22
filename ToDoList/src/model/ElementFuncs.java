@@ -84,4 +84,11 @@ public class ElementFuncs implements Element{
 		return newItem; //There must be a reason
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.getPriority() + "\t" + this.getDueDate() + "\t" + this.getName() + "\t" + 
+				this.getStatus() + "\t" +this.getDescription() ;
+	}
+	
 }
