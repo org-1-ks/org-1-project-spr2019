@@ -12,11 +12,6 @@ public class InProgress extends Status
         this.dateStarted = dateStarted;
     }
 
-    public LocalDate getDateStarted()
-    {
-        return dateStarted;
-    }
-
     @Override
     public Type getType()
     {
@@ -40,5 +35,15 @@ public class InProgress extends Status
             return false;
         InProgress other = (InProgress) obj;
         return Objects.equals(dateStarted, other.dateStarted);
+    }
+    
+    public LocalDate getStatusDate()
+    {
+    	return dateStarted ;
+    }   
+    
+    public String toString()
+    {
+    	return "In Progress" ;
     }
 }

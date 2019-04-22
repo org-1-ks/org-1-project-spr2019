@@ -29,4 +29,9 @@ public class NotStarted extends Status
             return false;
        return getClass() == obj.getClass();
     }
+    
+    public LocalDate getStatusDate()
+    {
+    	return null ;
+    }
 }

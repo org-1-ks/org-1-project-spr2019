@@ -22,6 +22,21 @@ public class ToDoFuncs implements ToDoList, Serializable {
 	@Override
 	public void insertElement(Element e) {
 		// TODO Auto-generated method stub
+		for (Element a : list)
+		{
+			if (e.getName().equals(a.getName()))
+				throw new RuntimeException("Name must be unique.") ;
+			if (e.getDescription().equals(a.getDescription()))
+				throw new RuntimeException("Description must be unique.") ;
+		
+		}
+		for (int i = 0; i < list.size(); i++)
+		{
+			Element a = list.get(i);
+			if (e.getPriority() <= a.getPriority())
+				list.set(i, a.withPriority(a.getPriority()+1)) ;
+		}
+
 		list.add(e);
 	}
 
@@ -108,7 +123,7 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		// TODO Auto-generated method stub
 		try {
 			PrintWriter write = new PrintWriter(new FileWriter(file)) ;
-			write.print("Priority\tDue Date\tTitle\tStatus\tDescription\n") ;
+			write.print("Priority\tDue Date\tTitle\tStatus\tStart/End Date\tDescription\n") ;
 			for (int i = 0; i < list.size(); i++)
 			{
 				write.print(list.get(i).toString()) ;
