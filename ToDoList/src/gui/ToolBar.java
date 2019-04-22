@@ -26,7 +26,7 @@ public class ToolBar extends JToolBar
     
     private JButton insert, remove, print, save, load;
     private JComboBox<String> sort;
-
+    
     public ToolBar(Frame frame)
     {
         final String PRIORITY = "Priority";
@@ -39,14 +39,15 @@ public class ToolBar extends JToolBar
         remove = new JButton("Remove Task");
         print = new JButton("Print");
         save = new JButton("Save");
-        load = new JButton("Load");
+        load = new JButton("Load"); 
+        
         var sortLabel = new JLabel("Sort By");
         sort = new JComboBox<>(new String[] {
                 PRIORITY,
                 DUE_DATE,
                 TASK_NAME
         });
-
+        
         insert.addActionListener(e -> {
             frame.selectItem();
             

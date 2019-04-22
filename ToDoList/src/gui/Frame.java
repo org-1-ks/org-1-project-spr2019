@@ -26,15 +26,14 @@ public class Frame extends JFrame
     private SelectedItem itemSelected;
     
     private ToolBar toolBar;
-    private Element selectedItem;
-    private final Element defaultElement;
     
+    Element selectedItem;
     ToDoList list;
     
     public Frame(ToDoList list, Element defaultElement)
     {
         this.list = list;
-        this.defaultElement = defaultElement;
+        this.selectedItem = defaultElement;
         
         noSelection = new NoSelection(this);
         itemSelected = new SelectedItem(this);
@@ -61,17 +60,28 @@ public class Frame extends JFrame
     }
     
     void selectItem() {
-        selectedItem = defaultElement;
-        
         remove(noSelection);
+        
         add(itemSelected, BorderLayout.CENTER);
+        noSelection.setVisible(false);
+        itemSelected.setVisible(true);
         
         itemSelected.use(selectedItem);
         
         revalidate();
     }
     
+    void unselectItem() {
+        remove(itemSelected);
+        add(noSelection, BorderLayout.CENTER);
+        itemSelected.setVisible(false);
+        noSelection.setVisible(true);
+
+        revalidate();
+    }
+    
     void updateList() {
-        selectedItem = null;
+        itemSelected.updateList();
+        noSelection.updateList(this.list);
     }
 }

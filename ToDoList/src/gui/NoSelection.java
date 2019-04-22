@@ -3,13 +3,22 @@ package gui;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.time.LocalDate;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import controller.Element;
+import controller.ToDoList;
+import model.status.Status;
 
 /**
  * 
@@ -25,8 +34,15 @@ public class NoSelection extends JPanel
      * 
      */
     private static final long serialVersionUID = 6611121813221534119L;
-    
-    public NoSelection()
+    private JList<Object>[] lists;
+    private DefaultListModel<Integer> priorityList;
+    private DefaultListModel<LocalDate> dueDateList;
+    private DefaultListModel<String> taskNameList;
+    private DefaultListModel<Status> statusList;
+    private DefaultListModel<String> descriptionList;
+
+    @SuppressWarnings("unchecked")
+    public NoSelection(Frame frame)
     {
         var title = new JLabel("New List");
         var priority = new JLabel("Priority");
@@ -35,12 +51,12 @@ public class NoSelection extends JPanel
         var status = new JLabel("Status");
         var description =  new JLabel("Description");
         
-        var priorityList = new JList<>();
-        var dueDateList = new JList<>();
-        var taskNameList = new JList<>();
-        var statusList = new JList<>();
-        var descriptionList = new JList<>();
-
+        priorityList = new DefaultListModel<Integer>();
+        dueDateList = new DefaultListModel<LocalDate>();
+        taskNameList = new DefaultListModel<String>();
+        statusList = new DefaultListModel<Status>();
+        descriptionList = new DefaultListModel<String>();
+        
         var labels = new JLabel[] {
                 priority,
                 dueDate,
@@ -49,14 +65,58 @@ public class NoSelection extends JPanel
                 description
         };
 
-        var lists = new JComponent[] {
-                priorityList,
-                dueDateList,
-                taskNameList,
-                statusList,
-                descriptionList
+        lists = new JList[] {
+            new JList<>(priorityList),
+            new JList<>(dueDateList),
+            new JList<>(taskNameList),
+            new JList<>(statusList),
+            new JList<>(descriptionList)
         };
-
+        
+        updateList(frame.list);
+        
+        for(var list: lists) {
+            list.addMouseListener(new MouseListener()
+            {
+                @Override
+                public void mouseReleased(MouseEvent e) {}
+                
+                @Override
+                public void mousePressed(MouseEvent e) {}
+                
+                @Override
+                public void mouseExited(MouseEvent e) {}
+                
+                @Override
+                public void mouseEntered(MouseEvent e) {}
+                
+                @Override
+                public void mouseClicked(MouseEvent e)
+                {
+                    if(e.getClickCount() == 2) {
+                        int index = list.getSelectedIndex();
+                        for(var l: lists) {
+                            l.setSelectedIndex(index);
+                        }
+                        
+                        frame.selectedItem =
+                                frame.selectedItem
+                                    .withPriority((int) lists[0].getSelectedValue())
+                                    .withDueDate((LocalDate) lists[1].getSelectedValue())
+                                    .withName((String) lists[2].getSelectedValue())
+                                    .withStatus((Status) lists[3].getSelectedValue())
+                                    .withDescription((String) lists[4].getSelectedValue());
+                        System.out.println("Selected: " + frame.selectedItem.getDueDate());
+                        frame.selectItem();
+                    } else {
+                        for(var l: lists) {
+                            l.setSelectedIndices(new int[] {});
+                        }
+                    }
+                }
+            });
+        }
+        
         Border border = new LineBorder(Color.BLACK);
         for(var list: lists) {
             list.setBackground(Color.WHITE);
@@ -112,5 +172,23 @@ public class NoSelection extends JPanel
         
         
         setVisible(true);
+    }
+
+    void updateList(ToDoList list) {
+        priorityList.clear();
+        dueDateList.clear();
+        taskNameList.clear();
+        statusList.clear();
+        descriptionList.clear();
+        
+        int size = 0;
+        for(var e: list.getElements()) {
+            priorityList.add(size, e.getPriority());
+            dueDateList.add(size, e.getDueDate());
+            taskNameList.add(size, e.getName());
+            statusList.add(size, e.getStatus());
+            descriptionList.add(size, e.getDescription()); 
+            size++;
+        }
     }
 }
