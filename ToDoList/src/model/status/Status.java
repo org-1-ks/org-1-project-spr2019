@@ -14,4 +14,10 @@ public abstract class Status
     }
     
     abstract public Type getType();
+    
+    @Override
+    abstract public boolean equals(Object obj);
+    
+    @Override
+    abstract public int hashCode();
 }
