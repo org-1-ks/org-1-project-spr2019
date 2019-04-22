@@ -54,6 +54,8 @@ public class ToolBar extends JToolBar
 
         remove.addActionListener(e -> {
             frame.list.removeElement(frame.selectedItem);
+            frame.updateList();
+            frame.unselectItem();
         });
 
         print.addActionListener(e -> {
