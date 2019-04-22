@@ -128,16 +128,18 @@ public class SelectedItem extends JPanel
                             .withDueDate(dueDate)
                             .withStatus(statusValue);
                         
-                        frame.list.removeElement(selected);
-                        frame.list.insertElement(newSelected);
-                        selected = newSelected;
+                    frame.list.removeElement(selected);
+                    frame.list.insertElement(newSelected);
+                    selected = newSelected;
                         
-                        frame.updateList();
-                        frame.unselectItem();
+                    frame.updateList();
+                    frame.unselectItem();
                 } catch (DateTimeParseException ex) {
                     JOptionPane.showMessageDialog(frame, "dates must have the format YYYY-MM-DD", "Edit Item", JOptionPane.ERROR_MESSAGE);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Please enter a positive integer for the priority", "Edit Item", JOptionPane.ERROR_MESSAGE);
+                } catch (RuntimeException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Edit Item", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

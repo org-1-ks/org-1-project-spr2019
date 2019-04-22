@@ -44,6 +44,6 @@ public class InProgress extends Status
     
     public String toString()
     {
-    	return "In Progress" ;
+    	return String.format("In Progress (started on %s)", dateStarted);
     }
 }
