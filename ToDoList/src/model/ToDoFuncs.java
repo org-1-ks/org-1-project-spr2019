@@ -35,25 +35,16 @@ public class ToDoFuncs implements ToDoList, Serializable {
 		// TODO Auto-generated method stub
 		switch(s) {		
 		case Priority:
-			for (int i = 0; i < list.size(); i++)
-			{
-				if (list.get(i).getPriority() == i)
-					//sort into i slot
-			}
-			//Collections.sort(list, sortByPriority) ; where sortByPriority is a class that implements comparator between priorities
+			//sort the list by comparing the priorities
+			Collections.sort(list, (Element a, Element b) -> a.getPriority().compareTo(b.getPriority())) ;
 			break;
 		case DueDate:
-			for (int i = 0; i < list.size(); i++)
-			{
-				Collections.sort(list.get(i).getDueDate()) ;
-			}
+			//sort the list by comparing the due dates
+			Collections.sort(list, (Element a, Element b) -> a.getDueDate().compareTo(b.getDueDate())) ;
 			break;
 		case Name:
-			for (int i = 0; i < list.size(); i++)
-			{
-				Collections.sort(list.get(i).getName()) ;
-				//depending on how the list is accessed
-			}
+			//sort the list by comparing names
+			Collections.sort(list, (Element a, Element b) -> a.getName().compareTo(b.getName())) ;
 			break;
 		}
 	}
