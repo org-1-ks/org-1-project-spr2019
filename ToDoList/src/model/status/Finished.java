@@ -5,6 +5,11 @@ import java.util.Objects;
 
 public class Finished extends Status
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7939360014527371671L;
+    
     private LocalDate dateFinished;
     
     public Finished(LocalDate dateFinished)

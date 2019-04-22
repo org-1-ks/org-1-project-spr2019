@@ -5,6 +5,11 @@ import java.util.Objects;
 
 public class NotStarted extends Status
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1437639015877684256L;
+
     public Type getType() {
         return Type.NOT_STARTED;
     }

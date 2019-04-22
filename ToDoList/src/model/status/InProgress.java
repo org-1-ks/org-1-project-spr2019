@@ -5,6 +5,11 @@ import java.util.Objects;
 
 public class InProgress extends Status
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8883957089048504772L;
+    
     private LocalDate dateStarted;
     
     public InProgress(LocalDate dateStarted)

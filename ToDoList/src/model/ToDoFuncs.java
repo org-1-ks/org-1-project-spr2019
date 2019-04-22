@@ -18,7 +18,12 @@ import controller.ToDoList;
 import controller.Sort;
 
 public class ToDoFuncs implements ToDoList, Serializable {
-	ArrayList<Element> list = new ArrayList<Element>();
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -6785270027166806418L;
+    
+    ArrayList<Element> list = new ArrayList<Element>();
 	@Override
 	public void insertElement(Element e) {
 		// TODO Auto-generated method stub

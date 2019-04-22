@@ -6,7 +6,12 @@ import controller.Element;
 import model.status.Status;
 
 public class ElementFuncs implements Element{
-	int priority=0;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -2961183535796193476L;
+    
+    int priority=0;
 	String name=null;
 	String description=null;
 	LocalDate dueDate=null;
