@@ -30,10 +30,16 @@ public class ToDoFuncs implements ToDoList, Serializable {
 				throw new RuntimeException("Description must be unique.") ;
 		
 		}
+		boolean samePriority = false ;
+		for (Element a : list)
+		{
+			if (e.getPriority() == a.getPriority())
+				samePriority = true ;
+		}
 		for (int i = 0; i < list.size(); i++)
 		{
 			Element a = list.get(i);
-			if (e.getPriority() <= a.getPriority())
+			if (e.getPriority() <= a.getPriority() && samePriority == true)
 				list.set(i, a.withPriority(a.getPriority()+1)) ;
 		}
 
@@ -126,7 +132,7 @@ public class ToDoFuncs implements ToDoList, Serializable {
 			write.print("Priority\tDue Date\tTitle\tStatus\tStart/End Date\tDescription\n") ;
 			for (int i = 0; i < list.size(); i++)
 			{
-				write.print(list.get(i).toString()) ;
+				write.print(list.get(i).toString() + "\n") ;
 			}
 			write.close() ;
 			
