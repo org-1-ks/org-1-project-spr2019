@@ -26,12 +26,14 @@ public class ElementFuncs implements Element{
 	}
 
 	@Override
-	public boolean equals(Element e) {
-		boolean compare = false;
-		if(priority == e.getPriority() && name.equals(e.getName()) && description.equals(e.getDescription()) && status.equals(e.getStatus()) && dueDate.equals(e.getDueDate())) {
-			compare==true;
-		}
-		return compare;
+	public boolean equals(Object o) {
+	    if (o instanceof Element) {
+            Element e = (Element) o;
+            
+            return priority == e.getPriority() && name.equals(e.getName()) && description.equals(e.getDescription()) && status.equals(e.getStatus()) && dueDate.equals(e.getDueDate());
+        } else {
+            return false;
+        }
 	}
 	
 	@Override
