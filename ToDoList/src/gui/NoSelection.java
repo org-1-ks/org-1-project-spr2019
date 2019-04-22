@@ -31,9 +31,10 @@ public class NoSelection extends JPanel
      * 
      */
     private static final long serialVersionUID = 6611121813221534119L;
+    
     private JList<Object>[] lists;
     private DefaultListModel<Integer> priorityList;
-    private DefaultListModel<String> dueDateList;
+    private DefaultListModel<LocalDate> dueDateList;
     private DefaultListModel<String> taskNameList;
     private DefaultListModel<Status> statusList;
     private DefaultListModel<String> descriptionList;
@@ -48,11 +49,11 @@ public class NoSelection extends JPanel
         var status = new JLabel("Status");
         var description =  new JLabel("Description");
         
-        priorityList = new DefaultListModel<Integer>();
-        dueDateList = new DefaultListModel<String>();
-        taskNameList = new DefaultListModel<String>();
-        statusList = new DefaultListModel<Status>();
-        descriptionList = new DefaultListModel<String>();
+        priorityList = new DefaultListModel<>();
+        dueDateList = new DefaultListModel<>();
+        taskNameList = new DefaultListModel<>();
+        statusList = new DefaultListModel<>();
+        descriptionList = new DefaultListModel<>();
         
         var labels = new JLabel[] {
                 priority,
@@ -180,11 +181,7 @@ public class NoSelection extends JPanel
         int size = 0;
         for(var e: list.getElements()) {
             priorityList.add(size, e.getPriority());
-            if(e.getDueDate() == null) {
-                dueDateList.add(size, "N/A");
-            } else {
-                dueDateList.add(size, e.getDueDate().toString());
-            }
+            dueDateList.add(size, e.getDueDate());
             taskNameList.add(size, e.getName());
             statusList.add(size, e.getStatus());
             descriptionList.add(size, e.getDescription()); 
