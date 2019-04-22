@@ -74,8 +74,8 @@ public class Frame extends JFrame
         add(itemSelected, BorderLayout.CENTER);
         noSelection.setVisible(false);
         itemSelected.setVisible(true);
-        
         itemSelected.use(selectedItem);
+        toolBar.insertOrRemove(false);
         
         revalidate();
     }
@@ -88,7 +88,7 @@ public class Frame extends JFrame
         add(noSelection, BorderLayout.CENTER);
         itemSelected.setVisible(false);
         noSelection.setVisible(true);
-
+        toolBar.insertOrRemove(true);
         revalidate();
     }
     
@@ -100,15 +100,13 @@ public class Frame extends JFrame
         noSelection.updateList(this.list);
     }
     
-    boolean insertOrRemove() {
+    void insertOrRemove() {
         if(itemSelected.isVisible()) {
             list.removeElement(selectedItem);
             updateList();
             unselectItem();
-            return true;
         } else {
             selectItem();
-            return false;
         }
     }
 }

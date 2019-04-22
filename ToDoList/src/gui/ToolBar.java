@@ -33,8 +33,6 @@ public class ToolBar extends JToolBar
         final String DUE_DATE = "Due Date";
         final String TASK_NAME = "Task Name";
         
-//        super(JToolBar.VERTICAL);
-        
         startOver = new JButton("Start Over");
         insertOrRemove = new JButton("Insert Task");
         print = new JButton("Print");
@@ -54,11 +52,7 @@ public class ToolBar extends JToolBar
         });
 
         insertOrRemove.addActionListener(e -> {
-            if(frame.insertOrRemove()) {
-                insertOrRemove.setText("Insert Task");
-            } else {
-                insertOrRemove.setText("Remove Task");
-            }
+            frame.insertOrRemove();
         });
 
         print.addActionListener(e -> {
@@ -157,5 +151,13 @@ public class ToolBar extends JToolBar
         
         sort.setPreferredSize(size);
         sort.setMaximumSize(size);
+    }
+    
+    void insertOrRemove(boolean isInsert) {
+        if(isInsert) {
+            insertOrRemove.setText("Insert Task");
+        } else {
+            insertOrRemove.setText("Remove Task");
+        }
     }
 }
