@@ -42,6 +42,7 @@ public class Frame extends JFrame
         
         noSelection = new NoSelection(this);
         itemSelected = new SelectedItem(this);
+        itemSelected.setVisible(false);
         
         setLayout(new BorderLayout());
         
@@ -97,5 +98,17 @@ public class Frame extends JFrame
     void updateList() {
         itemSelected.updateList();
         noSelection.updateList(this.list);
+    }
+    
+    boolean insertOrRemove() {
+        if(itemSelected.isVisible()) {
+            list.removeElement(selectedItem);
+            updateList();
+            unselectItem();
+            return true;
+        } else {
+            selectItem();
+            return false;
+        }
     }
 }

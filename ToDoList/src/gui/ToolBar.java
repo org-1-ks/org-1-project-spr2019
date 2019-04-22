@@ -24,7 +24,7 @@ public class ToolBar extends JToolBar
      */
     private static final long serialVersionUID = -6297787221312734786L;
     
-    private JButton insert, remove, print, save, load;
+    private JButton startOver, insertOrRemove, print, save, load;
     private JComboBox<String> sort;
     
     public ToolBar(Frame frame)
@@ -35,8 +35,8 @@ public class ToolBar extends JToolBar
         
 //        super(JToolBar.VERTICAL);
         
-        insert = new JButton("Insert Task");
-        remove = new JButton("Remove Task");
+        startOver = new JButton("Start Over");
+        insertOrRemove = new JButton("Insert Task");
         print = new JButton("Print");
         save = new JButton("Save");
         load = new JButton("Load"); 
@@ -48,14 +48,16 @@ public class ToolBar extends JToolBar
                 TASK_NAME
         });
         
-        insert.addActionListener(e -> {
-            frame.selectItem();
+        startOver.addActionListener(e -> {
+            
         });
 
-        remove.addActionListener(e -> {
-            frame.list.removeElement(frame.selectedItem);
-            frame.updateList();
-            frame.unselectItem();
+        insertOrRemove.addActionListener(e -> {
+            if(frame.insertOrRemove()) {
+                insertOrRemove.setText("Insert Task");
+            } else {
+                insertOrRemove.setText("Remove Task");
+            }
         });
 
         print.addActionListener(e -> {
@@ -137,8 +139,8 @@ public class ToolBar extends JToolBar
             }
         });
 
-        add(insert);        
-        add(remove);
+        add(startOver);        
+        add(insertOrRemove);
         add(sortLabel);
         add(sort);
         add(print);
