@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.*;
+import java.io.PrintWriter;
 
 import controller.Element;
 import controller.ToDoList;
@@ -31,15 +33,27 @@ public class ToDoFuncs implements ToDoList, Serializable {
 	@Override
 	public void sortBy(Sort s) {
 		// TODO Auto-generated method stub
-		switch(s) {
+		switch(s) {		
 		case Priority:
-			//list.sort(Priority);
+			for (int i = 0; i < list.size(); i++)
+			{
+				if (list.get(i).getPriority() == i)
+					//sort into i slot
+			}
+			//Collections.sort(list, sortByPriority) ; where sortByPriority is a class that implements comparator between priorities
 			break;
 		case DueDate:
-			//list.sort(DueDate);
+			for (int i = 0; i < list.size(); i++)
+			{
+				Collections.sort(list.get(i).getDueDate()) ;
+			}
 			break;
 		case Name:
-			//list.sort(Name);
+			for (int i = 0; i < list.size(); i++)
+			{
+				Collections.sort(list.get(i).getName()) ;
+				//depending on how the list is accessed
+			}
 			break;
 		}
 	}
@@ -100,8 +114,20 @@ public class ToDoFuncs implements ToDoList, Serializable {
 	@Override
 	public void printTo(File file) {
 		// TODO Auto-generated method stub
-		//not sure how to handle printing to a printer device
-	}
+		try {
+			PrintWriter write = new PrintWriter(FileWriter(file)) ;
+			write.print("Priority\tDue Date\tTitle\tStatus\tDescription\n") ;
+			for (int i = 0; i < list.size(); i++)
+			{
+				write.print(list.get(i).toString) ;
+			}
+			write.close() ;
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	}
 
 	@Override
 	public void saveTo(File file) {
