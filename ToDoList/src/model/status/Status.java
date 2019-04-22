@@ -1,5 +1,6 @@
 package model.status;
 
+import java.io.Serializable;
 import java.time.LocalDate ;
 
 /**
@@ -7,8 +8,13 @@ import java.time.LocalDate ;
  * @author Krishna Sannasi
  *
  */
-public abstract class Status
+public abstract class Status implements Serializable
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 347354487474721357L;
+
     public static enum Type {
         NOT_STARTED,
         IN_PROGRESS,
