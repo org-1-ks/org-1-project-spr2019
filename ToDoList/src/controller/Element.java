@@ -66,4 +66,10 @@ public interface Element
      *  all other properties are the same as the current element 
      */
     Element withDescription(String description);
+    
+    /**
+     * @return - String of the element to be printed on a 
+     * readable page
+     */
+    String toString();
 }
