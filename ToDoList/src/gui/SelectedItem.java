@@ -92,6 +92,8 @@ public class SelectedItem extends JPanel {
                 JOptionPane.showMessageDialog(frame, "Please enter a due date",
                         "Edit Item", JOptionPane.ERROR_MESSAGE);
             } else {
+                var numberOfElements = frame.list.getElements().size() + 1;
+                
                 try {
                     Status statusValue;
                     
@@ -115,7 +117,7 @@ public class SelectedItem extends JPanel {
                     
                     var priorityValue = Integer.parseInt(priority.getText());
                     
-                    if (priorityValue < 1) {
+                    if (priorityValue < 1 || priorityValue > numberOfElements) {
                         throw new NumberFormatException("Invalid Priority");
                     }
                     
@@ -137,9 +139,10 @@ public class SelectedItem extends JPanel {
                             "dates must have the format YYYY-MM-DD",
                             "Edit Item", JOptionPane.ERROR_MESSAGE);
                 } catch(NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame,
-                            "Please enter a positive integer for the priority",
-                            "Edit Item", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, String.format(
+                            "Please enter an integer between 1-%d for the priority",
+                            numberOfElements), "Edit Item",
+                            JOptionPane.ERROR_MESSAGE);
                 } catch(RuntimeException ex) {
                     JOptionPane.showMessageDialog(frame, ex.getMessage(),
                             "Edit Item", JOptionPane.ERROR_MESSAGE);

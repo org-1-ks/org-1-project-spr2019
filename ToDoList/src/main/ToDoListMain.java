@@ -7,7 +7,7 @@ import model.status.NotStarted;
 
 public class ToDoListMain {
     public static void main(String[] args) {
-        var element = new ElementFuncs(-1, "enter name here",
+        var element = new ElementFuncs(1, "enter name here",
                 "enter description here", null, new NotStarted());
         var list = new ToDoFuncs();
         
