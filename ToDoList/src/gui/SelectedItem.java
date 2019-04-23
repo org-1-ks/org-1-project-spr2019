@@ -22,7 +22,6 @@ import model.status.InProgress;
 import model.status.NotStarted;
 import model.status.Status;
 
-
 /**
  * 
  * The screen when the user has selected an item
@@ -30,31 +29,25 @@ import model.status.Status;
  * @author Krishna Sannasi
  *
  */
-public class SelectedItem extends JPanel
-{
-
-    /**
-     * 
-     */
+public class SelectedItem extends JPanel {
     private static final long serialVersionUID = -7309683605288525493L;
     private static final String NOT_STARTED = "Not Started";
     private static final String FINISHED = "Finished";
     private static final String IN_PROGRESS = "In Progress";
-
+    
     private static JTextField priority;
     private static JTextField name;
     private static JTextField date;
     private static JTextField auxDate;
     private static JComboBox<String> status;
     private static JTextArea description;
-
+    
     private static Element selected;
     
-    public SelectedItem(Frame frame)
-    {
+    public SelectedItem(Frame frame) {
         var topPanel = new JPanel();
         var saveCancelPanel = new JPanel();
-
+        
         var nameLabel = new JLabel("Name:");
         var priorityLabel = new JLabel("Priority:");
         var statusLabel = new JLabel("Status:");
@@ -67,11 +60,8 @@ public class SelectedItem extends JPanel
         date = new JTextField(10);
         auxDate = new JTextField(10);
         priority = new JTextField(5);
-        status = new JComboBox<>(new String[] {
-            NOT_STARTED,
-            IN_PROGRESS,
-            FINISHED
-        });
+        status = new JComboBox<>(
+                new String[] { NOT_STARTED, IN_PROGRESS, FINISHED });
         description = new JTextArea();
         description.setBorder(new LineBorder(Color.BLACK));
         
@@ -79,7 +69,8 @@ public class SelectedItem extends JPanel
         
         status.addActionListener(e -> {
             switch((String) status.getSelectedItem()) {
-                default: return; // unreachable
+                default:
+                    return; // unreachable
                 case NOT_STARTED:
                     auxDate.setEnabled(false);
                     break;
@@ -89,7 +80,7 @@ public class SelectedItem extends JPanel
                     break;
             }
         });
-
+        
         // Discards changes
         cancel.addActionListener(e -> {
             frame.unselectItem();
@@ -97,51 +88,61 @@ public class SelectedItem extends JPanel
         
         // Saves changes
         save.addActionListener(e -> {
-            if("N/A".equals(date.getText())) {
-                JOptionPane.showMessageDialog(frame, "Please enter a due date", "Edit Item", JOptionPane.ERROR_MESSAGE);
+            if ("N/A".equals(date.getText())) {
+                JOptionPane.showMessageDialog(frame, "Please enter a due date",
+                        "Edit Item", JOptionPane.ERROR_MESSAGE);
             } else {
                 try {
                     Status statusValue;
                     
                     switch((String) status.getSelectedItem()) {
-                        default: return; // unreachable
+                        default:
+                            return; // unreachable
                         case NOT_STARTED:
                             statusValue = new NotStarted();
                             break;
                         case FINISHED:
-                            statusValue = new Finished(LocalDate.parse(auxDate.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
+                            statusValue = new Finished(
+                                    LocalDate.parse(auxDate.getText(),
+                                            DateTimeFormatter.ISO_LOCAL_DATE));
                             break;
                         case IN_PROGRESS:
-                            statusValue = new InProgress(LocalDate.parse(auxDate.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
+                            statusValue = new InProgress(
+                                    LocalDate.parse(auxDate.getText(),
+                                            DateTimeFormatter.ISO_LOCAL_DATE));
                             break;
                     }
                     
                     var priorityValue = Integer.parseInt(priority.getText());
                     
-                    if(priorityValue < 1) {
+                    if (priorityValue < 1) {
                         throw new NumberFormatException("Invalid Priority");
                     }
                     
-                    var dueDate = LocalDate.parse(date.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
-                    var newSelected = selected
-                            .withName(name.getText())
+                    var dueDate = LocalDate.parse(date.getText(),
+                            DateTimeFormatter.ISO_LOCAL_DATE);
+                    var newSelected = selected.withName(name.getText())
                             .withDescription(description.getText())
-                            .withPriority(priorityValue)
-                            .withDueDate(dueDate)
+                            .withPriority(priorityValue).withDueDate(dueDate)
                             .withStatus(statusValue);
-                        
+                    
                     frame.list.removeElement(selected);
                     frame.list.insertElement(newSelected);
                     selected = newSelected;
-                        
+                    
                     frame.updateList();
                     frame.unselectItem();
-                } catch (DateTimeParseException ex) {
-                    JOptionPane.showMessageDialog(frame, "dates must have the format YYYY-MM-DD", "Edit Item", JOptionPane.ERROR_MESSAGE);
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "Please enter a positive integer for the priority", "Edit Item", JOptionPane.ERROR_MESSAGE);
-                } catch (RuntimeException ex) {
-                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Edit Item", JOptionPane.ERROR_MESSAGE);
+                } catch(DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(frame,
+                            "dates must have the format YYYY-MM-DD",
+                            "Edit Item", JOptionPane.ERROR_MESSAGE);
+                } catch(NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Please enter a positive integer for the priority",
+                            "Edit Item", JOptionPane.ERROR_MESSAGE);
+                } catch(RuntimeException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(),
+                            "Edit Item", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -165,18 +166,18 @@ public class SelectedItem extends JPanel
         var c = new GridBagConstraints();
         
         c.fill = GridBagConstraints.BOTH;
-
+        
         c.gridx = 0;
         c.gridy = 0;
-
+        
         c.weightx = 1;
         c.weighty = 1;
         
         c.gridwidth = 1;
         c.gridheight = 1;
-
+        
         add(topPanel, c);
-
+        
         c.gridx = 0;
         c.gridy++;
         c.anchor = GridBagConstraints.WEST;
@@ -195,14 +196,16 @@ public class SelectedItem extends JPanel
     /**
      * Select which item to edit
      * 
-     * @param e - which element is selected
+     * @param e
+     *              - which element is selected
      */
     void use(Element e) {
         selected = e;
         
         var dateString = "N/A";
-        if(e.getDueDate() != null) {
-            dateString = e.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        if (e.getDueDate() != null) {
+            dateString = e.getDueDate()
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
         
         name.setText(e.getName());
@@ -212,11 +215,11 @@ public class SelectedItem extends JPanel
         
         Status.Type statusType = null;
         
-        if(e.getStatus() != null) {
+        if (e.getStatus() != null) {
             statusType = e.getStatus().getType();
         }
         
-        if(statusType == null) {
+        if (statusType == null) {
             status.setSelectedItem(NOT_STARTED);
         } else {
             switch(statusType) {

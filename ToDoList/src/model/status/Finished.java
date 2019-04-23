@@ -3,35 +3,27 @@ package model.status;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Finished extends Status
-{
-    /**
-     * 
-     */
+public class Finished extends Status {
     private static final long serialVersionUID = -7939360014527371671L;
     
     private LocalDate dateFinished;
     
-    public Finished(LocalDate dateFinished)
-    {
+    public Finished(LocalDate dateFinished) {
         this.dateFinished = dateFinished;
     }
-
+    
     @Override
-    public Type getType()
-    {
+    public Type getType() {
         return Type.FINISHED;
     }
-
+    
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(dateFinished);
     }
-
+    
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -42,13 +34,11 @@ public class Finished extends Status
         return Objects.equals(dateFinished, other.dateFinished);
     }
     
-    public LocalDate getStatusDate()
-    {
-    	return dateFinished ;
+    public LocalDate getStatusDate() {
+        return dateFinished;
     }
     
-    public String toString()
-    {
-    	return String.format("Finished (finished on %s)", dateFinished);
+    public String toString() {
+        return String.format("Finished (finished on %s)", dateFinished);
     }
 }

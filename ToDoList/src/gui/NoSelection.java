@@ -24,12 +24,7 @@ import model.status.Status;
  * @author Krishna Sannasi
  *
  */
-public class NoSelection extends JPanel
-{
-
-    /**
-     * 
-     */
+public class NoSelection extends JPanel {
     private static final long serialVersionUID = 6611121813221534119L;
     
     private JList<Object>[] lists;
@@ -38,16 +33,15 @@ public class NoSelection extends JPanel
     private DefaultListModel<String> taskNameList;
     private DefaultListModel<Status> statusList;
     private DefaultListModel<String> descriptionList;
-
+    
     @SuppressWarnings("unchecked")
-    public NoSelection(Frame frame)
-    {
+    public NoSelection(Frame frame) {
         var title = new JLabel("New List");
         var priority = new JLabel("Priority");
         var dueDate = new JLabel("Due Date");
         var taskName = new JLabel("Task Name");
         var status = new JLabel("Status");
-        var description =  new JLabel("Description");
+        var description = new JLabel("Description");
         
         priorityList = new DefaultListModel<>();
         dueDateList = new DefaultListModel<>();
@@ -55,27 +49,17 @@ public class NoSelection extends JPanel
         statusList = new DefaultListModel<>();
         descriptionList = new DefaultListModel<>();
         
-        var labels = new JLabel[] {
-                priority,
-                dueDate,
-                taskName,
-                status,
-                description
-        };
-
-        lists = new JList[] {
-            new JList<>(priorityList),
-            new JList<>(dueDateList),
-            new JList<>(taskNameList),
-            new JList<>(statusList),
-            new JList<>(descriptionList)
-        };
+        var labels = new JLabel[] { priority, dueDate, taskName, status,
+                description };
+        
+        lists = new JList[] { new JList<>(priorityList),
+                new JList<>(dueDateList), new JList<>(taskNameList),
+                new JList<>(statusList), new JList<>(descriptionList) };
         
         updateList(frame.list);
         
-        for(var list: lists) {
-            list.addMouseListener(new MouseListener()
-            {
+        for(var list : lists) {
+            list.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseReleased(MouseEvent e) {}
                 
@@ -89,24 +73,25 @@ public class NoSelection extends JPanel
                 public void mouseEntered(MouseEvent e) {}
                 
                 @Override
-                public void mouseClicked(MouseEvent e)
-                {
-                    if(e.getClickCount() == 2) {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
                         int index = list.getSelectedIndex();
-                        for(var l: lists) {
+                        for(var l : lists) {
                             l.setSelectedIndex(index);
                         }
                         
-                        frame.selectedItem =
-                                frame.selectedItem
-                                    .withPriority((int) lists[0].getSelectedValue())
-                                    .withDueDate((LocalDate) lists[1].getSelectedValue())
-                                    .withName((String) lists[2].getSelectedValue())
-                                    .withStatus((Status) lists[3].getSelectedValue())
-                                    .withDescription((String) lists[4].getSelectedValue());
+                        frame.selectedItem = frame.selectedItem
+                                .withPriority((int) lists[0].getSelectedValue())
+                                .withDueDate(
+                                        (LocalDate) lists[1].getSelectedValue())
+                                .withName((String) lists[2].getSelectedValue())
+                                .withStatus(
+                                        (Status) lists[3].getSelectedValue())
+                                .withDescription(
+                                        (String) lists[4].getSelectedValue());
                         frame.selectItem();
                     } else {
-                        for(var l: lists) {
+                        for(var l : lists) {
                             l.setSelectedIndices(new int[] {});
                         }
                     }
@@ -115,7 +100,7 @@ public class NoSelection extends JPanel
         }
         
         Border border = new LineBorder(Color.BLACK);
-        for(var list: lists) {
+        for(var list : lists) {
             list.setBackground(Color.WHITE);
             list.setBorder(border);
         }
@@ -129,7 +114,7 @@ public class NoSelection extends JPanel
         
         c.gridx = 2;
         c.gridy = 0;
-
+        
         c.weightx = 1;
         c.weighty = 1;
         
@@ -138,7 +123,7 @@ public class NoSelection extends JPanel
         
         c.weightx = 1;
         c.weighty = 1;
-
+        
         c.anchor = GridBagConstraints.CENTER;
         
         add(title, c);
@@ -146,13 +131,13 @@ public class NoSelection extends JPanel
         c.gridy++;
         c.gridx = 0;
         
-        
         // go through all labels and lists and add them in the appropriate place
         for(int i = 0; i < labels.length; i++) {
             var label = labels[i];
             var list = lists[i];
             
-            if("Task Name".equals(label.getText()) || "Description".equals(label.getText())) {
+            if ("Task Name".equals(label.getText())
+                    || "Description".equals(label.getText())) {
                 c.weightx = 3;
             } else {
                 c.weightx = 1;
@@ -161,7 +146,7 @@ public class NoSelection extends JPanel
             c.gridx = i;
             c.gridy = 1;
             c.weighty = 1;
-
+            
             add(label, c);
             
             c.gridy = 2;
@@ -169,7 +154,6 @@ public class NoSelection extends JPanel
             
             add(list, c);
         }
-        
         
         setVisible(true);
     }
@@ -187,12 +171,12 @@ public class NoSelection extends JPanel
         descriptionList.clear();
         
         int size = 0;
-        for(var e: list.getElements()) {
+        for(var e : list.getElements()) {
             priorityList.add(size, e.getPriority());
             dueDateList.add(size, e.getDueDate());
             taskNameList.add(size, e.getName());
             statusList.add(size, e.getStatus());
-            descriptionList.add(size, e.getDescription()); 
+            descriptionList.add(size, e.getDescription());
             size++;
         }
     }

@@ -6,8 +6,7 @@ package controller;
  * @author Krishna Sannasi
  *
  */
-public enum Sort
-{
+public enum Sort {
     /**
      * Sort by priority
      */

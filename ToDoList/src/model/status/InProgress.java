@@ -3,35 +3,27 @@ package model.status;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class InProgress extends Status
-{
-    /**
-     * 
-     */
+public class InProgress extends Status {
     private static final long serialVersionUID = -8883957089048504772L;
     
     private LocalDate dateStarted;
     
-    public InProgress(LocalDate dateStarted)
-    {
+    public InProgress(LocalDate dateStarted) {
         this.dateStarted = dateStarted;
     }
-
+    
     @Override
-    public Type getType()
-    {
+    public Type getType() {
         return Type.IN_PROGRESS;
     }
-
+    
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(dateStarted);
     }
-
+    
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -42,13 +34,11 @@ public class InProgress extends Status
         return Objects.equals(dateStarted, other.dateStarted);
     }
     
-    public LocalDate getStatusDate()
-    {
-    	return dateStarted ;
-    }   
+    public LocalDate getStatusDate() {
+        return dateStarted;
+    }
     
-    public String toString()
-    {
-    	return String.format("In Progress (started on %s)", dateStarted);
+    public String toString() {
+        return String.format("In Progress (started on %s)", dateStarted);
     }
 }

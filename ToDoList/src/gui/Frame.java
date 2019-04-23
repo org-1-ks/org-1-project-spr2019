@@ -15,11 +15,7 @@ import controller.ToDoList;
  * @author Krishna Sannasi
  *
  */
-public class Frame extends JFrame
-{
-    /**
-     * Auto-generated serial number
-     */
+public class Frame extends JFrame {
     private static final long serialVersionUID = 4743270606172960944L;
     
     private NoSelection noSelection;
@@ -32,11 +28,11 @@ public class Frame extends JFrame
     
     /**
      * Sets the window for all operations on the list to take place.
+     * 
      * @param list
      * @param defaultElement
      */
-    public Frame(ToDoList list, Element defaultElement)
-    {
+    public Frame(ToDoList list, Element defaultElement) {
         this.list = list;
         this.selectedItem = defaultElement;
         this.defaultItem = defaultElement;
@@ -54,7 +50,7 @@ public class Frame extends JFrame
         setSize(screenSize.width * 2 / 3, screenSize.height * 2 / 3);
         
         add(toolBar, BorderLayout.NORTH);
-
+        
         // initial screen should have no selection
         add(noSelection, BorderLayout.CENTER);
         
@@ -97,11 +93,11 @@ public class Frame extends JFrame
     }
     
     /**
-     * This function either inserts or removes an element based
-     * on what screen we are currently on
+     * This function either inserts or removes an element based on what screen
+     * we are currently on
      */
     void insertOrRemove() {
-        if(itemSelected.isVisible()) {
+        if (itemSelected.isVisible()) {
             list.removeElement(selectedItem);
             updateList();
             unselectItem();
